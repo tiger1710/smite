@@ -13,7 +13,7 @@ use smite::println;
 #[panic_handler]
 fn panic(info: &PanicInfo) -> ! {
     println!("{info}");
-    loop {}
+    smite::hlt_loop();
 }
 
 #[cfg(test)]
@@ -24,16 +24,16 @@ fn panic(info: &PanicInfo) -> ! {
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
-    println!(
-        "Hello, world! / some numbers: {i} {f}...",
-        i = 42,
-        f = 1.337
-    );
+    println!("Hello, world!");
+
+    smite::init();
 
     #[cfg(test)]
     test_main();
 
-    loop {}
+    println!("It did not crash!");
+
+    smite::hlt_loop();
 }
 
 #[test_case]
